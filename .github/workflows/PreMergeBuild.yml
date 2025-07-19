@@ -1,0 +1,23 @@
+name: PreMerge Build                 # ワークフローの名前
+on: pull_request
+  branches:
+    - main                         # ワークフローが動作するトリガー、この記載ではmergeしたときに動作する
+
+jobs:                            # jobの定義
+  pre-merge-build:                   # jobのID
+    runs-on: ubuntu-latest       # ランナー（ジョブが動作するDocker Image）、今回はubuntuの最新のイメージを利用
+    steps:                       # ここからjobの中で実行されるコマンドですよーという意味
+      - name: Checkout repository        # stepは一つ一つ名前がつけることができます（つけておくとどこで失敗したのかがわかりやすくなります）
+        uses: actions/checkout@v4       # 実行されるコマンド
+
+      - name: Setup Node.js         # Node.jsのセットアップもActionが用意されています
+        uses: actions/setup-node@v3
+        with:
+            node-version: '23'        # セットアップするバージョンを指定できます
+
+      - name: Install dependencies
+        run: cd frontend && npm install
+
+      - name: Build
+        run cd frontend && npm run build
+
