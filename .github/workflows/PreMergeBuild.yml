@@ -21,6 +21,6 @@ jobs:
       - name: Install dependencies
         run: cd frontend && npm install
 
-      - name: Build the project
+      - name: Build
         run: cd frontend && npm run build
 
